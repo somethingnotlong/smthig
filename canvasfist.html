@@ -4,12 +4,28 @@
       <title>Canvas</title>
     </head>
     <body>
-        <canvas id="gameCanvas" width="500" height="300" style="border:1px solid black;"></canvas>
-        <script>
-            const canvas = document.getElementById("gameCanvas");
-            const ctx = canvas.getContext("2d");
-            ctx.fillStyle = "red";
-            ctx.fillRect(50, 50, 50, 50);
-        </script>
-    </body>
+    <canvas id="gameCanvas" width="2000" height="850"></canvas>
+   <style> canvas {
+    background: rgb(117, 200, 223)
+   }
+    </style>
+     <script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+ctx.fillStyle = "dark blue";
+ctx.fillRect(0,720,2000,130)
+ctx.fillStyle = "dark blue";
+ctx.fillRect(10,550,100,40)
+ctx.fillStyle = "dark blue";
+ctx.fillRect(300,600,100,40)
+ctx.fillStyle = "dark blue";
+ctx.fillRect(100,400,100,40)
+ctx.fillStyle = "dark blue";
+ctx.fillRect(500, 350, 300, 30)
+ctx.fillStyle = "dark blue";
+ctx.fillRect(1000, 700, 300, 50)
+ctx.fillStyle = "blue";
+ctx.fillRect(10,500, 50,50)
+</script>
+ </body>
 </html>
