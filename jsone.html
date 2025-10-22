@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Level test</title>
+    </head>
+    <body>
+	<h1>Hmmmm</h1>
+	<div id = “image_response”>
+  </div>
+    <script>
+        let lvl = (Number(prompt("what is your level?")))
+        console.log(lvl)
+        let weaponchecker = prompt("do you have a Rare armor? (Type O if yes)")
+        console.log(weaponchecker)
+        let image_response = document.getElementByID("image_response")
+        if (lvl>9 && weaponchecker=="O"||lvl>20){   
+          image_response.innerHTML = '<img src="https://www.google.com/search?sca_esv=510a591a39dbdeb7&rlz=1C1ONGR_enCA1079CA1079&sxsrf=AE3TifOqM6Zeerb5iTxevRK97JmWKaZnGQ:1761092273784&udm=2&fbs=AIIjpHyDg0Pef0CibV20xjIa-FRejxCuOmkq074km2sZXr7uqz9_8tiStZcoMiP-q5iAtTZea012_WShjO6gd8_YyX878vIUOOVaRtH7vIltuz604IVIGI7VytTfxeVPAcHk8vleH4sewSzLxtD-fqOc9xm7B-5cOBEvRHJuUZ4-ir5u--fbb4DdLhj7i3AqNmaVoO1OqChJ2_KrTiFwwBLy2bAWIzBauWYFsgeJ0UdNYEi1-TzKyoU&q=you+are+in&sa=X&ved=2ahUKEwiB65T7w7aQAxV_DTQIHVE7KiwQtKgLegQIDxAB&biw=1707&bih=932&dpr=1.5#vhid=I1llhGqP8xPeQM&vssid=mosaic"></img>'
+        }else if (lvl<9 || weaponchecker!="O"){
+          image_response.innerHTML = '<img src="https://www.google.com/search?q=nuh+uh&sca_esv=510a591a39dbdeb7&rlz=1C1ONGR_enCA1079CA1079&udm=2&biw=1707&bih=932&sxsrf=AE3TifPUvQiphrxZhdgEyYoSleU0AMLj7w%3A1761092275795&ei=syL4aISuMJvP0PEPlcvFyAU&ved=0ahUKEwjE04_8w7aQAxWbJzQIHZVlEVkQ4dUDCBI&uact=5&oq=nuh+uh&gs_lp=Egtnd3Mtd2l6LWltZyIGbnVoIHVoMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjDDFC-AljLCnABeACQAQCYAVCgAcMDqgEBNrgBA8gBAPgBAZgCB6AChQSoAgrCAgoQIxgnGMkCGOoCwgIHECMYJxjJApgDDJIHATegB4YcsgcBNrgH-QPCBwUyLTUuMsgHNA&sclient=gws-wiz-img#vhid=lKORlUaax3mF1M&vssid=mosaic"/>'
+        }
+        </script>
+   </body>
+   </html>
