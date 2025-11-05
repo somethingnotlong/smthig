@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Canvas</title>
+    </head>
+    <body>
+    <canvas id="Background" width="2000" height="1000"></canvas>
+    <style> canvas {
+    background: rgb(0, 0, 0)
+    }
+    </style>
+     <script>
+     const canvas = document.getElementById("Background");
+     const ctx = canvas.getContext("2d");
+     ctx.fillStyle = "red"
+     ctx.fillRect(50,800,100,100)
+     </script>
+    <div id = "Yesorno">
+    </div>
+     </script>
+     <script>
+     prompt("Hello.")
+     prompt("...")
+     prompt("I see... you ignored its voice, or disobeyed it.")
+     prompt("However that does not matter now.")
+     prompt("Though you do not see me,")
+     prompt("I am your sancturary.")
+     prompt("I am the one giving you all of these miracle-like perspective of the world.")
+     prompt("I am a place where all of your whispers and shouts are completely muted.")
+     prompt("Why? are you scared or confused? That is weird because...")
+     prompt("You have created me.")
+     prompt("Because you wanted to escape from reality, because you wanted an illusion world.")
+     prompt("So do not worry, ignore the voice of the outside.")
+     prompt("We will have eternal slumber, wearing a glass that completely changes visions called: M.D.")
+     let response = prompt("So, what is your choice about this? Would you spend eternity in me? Say Yes if you agree.")
+     console.log(response)
+     let Yesorno = document.getElementById("Answer")
+     if (response=="Yes" || "yes"){
+       Yesorno.innerHTML = prompt("So, you accepted me, thank you. We will rest in peace here, FOREVER.") 
+     }
+    if (response!= "Yes" || "yes"){
+       Yesorno.innerHTML = prompt("That is quite a foolish answer. You still do not notice? THE FACT THAT YOU ARE ALREADY TAKEN OVER BY ME.")
+    } 
+    </body>
+</html>

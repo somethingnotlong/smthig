@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Canvas</title>
+    </head>
+    <body>
+    <canvas id="Background" width="2000" height="1000"></canvas>
+    <style> canvas {
+    background: rgb(130, 130, 211)
+    }
+    </style>
+     <script>
+     const canvas = document.getElementById("Background");
+     const ctx = canvas.getContext("2d");
+     ctx.fillStyle = "red"
+     ctx.fillRect(0,400,100,100)
+     ctx.fillStyle = "cyan"
+     ctx.fillRect(400,200,100,100)
+     ctx.fillStyle = "cyan"
+     ctx.fillRect(400,550,100,100)
+     ctx.fillStyle = "white"
+     ctx.fillRect(600,50,100,100)
+     ctx.fillStyle = "white"
+     ctx.fillRect(600,750,100,100)
+     ctx.fillStyle = "blue"
+     ctx.fillRect(1000,500,100,100)
+     ctx.fillStyle = "blue"
+     ctx.fillRect(1000,100,100,100)
+     ctx.fillStyle = "blue"
+     ctx.fillRect(1000,300,100,100)
+     ctx.fillStyle = "blue"
+     ctx.fillRect(1000,700,100,100)
+     ctx.fillStyle = "yellow"
+     ctx.fillRect(1200,400,100,100)
+     ctx.fillStyle = "gray"
+     ctx.fillRect(100,375,650,150)
+     </script>
+     </body>
+</html>
+......
