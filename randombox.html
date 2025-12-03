@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <title>Random Boxes</title>
+    </head>
+    <body>
+    <canvas id="canvas" width="2000" height="1000"></canvas>
+    <style> canvas {
+    background: rgb(50, 50, 80)
+    }
+    </style> 
+    <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    
+    // 여러 개의 박스 생성
+    const boxes = [];
+    const boxCount = 10;
+    
+    for (let i = 0; i < boxCount; i++) {
+      boxes.push({
+        x: Math.random() * (canvas.width - 50),
+        y: Math.random() * (canvas.height - 50),
+        size: 30 + Math.random() * 40,
+        speed: 2 + Math.random() * 4,
+        color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`,
+        directionX: Math.random() > 0.5 ? 1 : -1,
+        directionY: Math.random() > 0.5 ? 1 : -1,
+        changeDirection: Math.floor(Math.random() * 120) + 60, // 랜덤 방향 변경 시간
+        counter: 0
+      });
+    }
+
+    // 위치 업데이트 함수
+    function update() {
+      boxes.forEach(box => {
+        // 랜덤하게 방향 변경
+        box.counter++;
+        if (box.counter >= box.changeDirection) {
+          box.directionX = Math.random() > 0.5 ? 1 : -1;
+          box.directionY = Math.random() > 0.5 ? 1 : -1;
+          box.changeDirection = Math.floor(Math.random() * 120) + 60;
+          box.counter = 0;
+        }
+
+        // 방향에 따라 위치 변경
+        box.x += box.speed * box.directionX;
+        box.y += box.speed * box.directionY;
+
+        // 캔버스 밖으로 못 나가게 제한
+        if (box.x < 0) {
+          box.x = 0;
+          box.directionX = 1;
+        }
+        if (box.y < 0) {
+          box.y = 0;
+          box.directionY = 1;
+        }
+        if (box.x + box.size > canvas.width) {
+          box.x = canvas.width - box.size;
+          box.directionX = -1;
+        }
+        if (box.y + box.size > canvas.height) {
+          box.y = canvas.height - box.size;
+          box.directionY = -1;
+        }
+      });
+    }
+
+    // 화면 그리기 함수
+    function draw() {
+      // 캔버스 지우기
+      ctx.clearRect(0, 0, 2000, 1000);
+
+      // 모든 박스 그리기
+      boxes.forEach(box => {
+        ctx.fillStyle = box.color;
+        ctx.fillRect(box.x, box.y, box.size, box.size);
+      });
+    }
+
+    // 게임 루프
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    loop();
+    </script>
+    </body>
+</html>
