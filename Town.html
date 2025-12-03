@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-       <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
     <title>Canvas</title>
     </head>
     <body>
-    <canvas id="Background" width="2000" height="1000"></canvas>
+    <canvas id="canvas" width="2000" height="1000"></canvas>
     <style> canvas {
     background: rgb(7, 137, 18)
     }
     </style> 
     <script>
-  </script>
-     <script>
-     const canvas = document.getElementById("Background");
-     const ctx = canvas.getContext("2d");
-     ctx.fillStyle = "brown"
-     ctx.fillRect(50,20,150,850)
-     ctx.fillStyle = "brown"
-     ctx.fillRect(50,750,2000,150)
-     ctx.fillStyle = "maroon"
-     ctx.fillRect(500,300,200,140)
-     ctx.fillStyle = "maroon"
-     ctx.fillRect(1100,300,200,140)
-     ctx.fillStyle = "maroon"
-     ctx.fillRect(1700,300,200,140)
-     ctx.fillStyle = "maroon"
-     ctx.fillRect(500,0,50,250)
-const img = {x:50,y:0,size:100,speed:3}
- // 현재 눌려 있는 키 상태
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    // 플레이어(사각형) 기본 설정
+    const img = {
+      x: 100,
+      y: 100,
+      size: 40,
+      speed: 6,
+    };
+
+    // 현재 눌려 있는 키 상태
     const keys = {
       w: false,
       a: false,
       s: false,
       d: false,
     };
-
-    // 키 입력 이벤트 등록
+            // 키 입력 이벤트 등록
+      function physics(){
     window.addEventListener("keydown", (e) => {
       const key = e.key.toLowerCase();
       if (key in keys) {
@@ -51,19 +44,7 @@ const img = {x:50,y:0,size:100,speed:3}
       }
     });
 
-    // 이미지 로드
-    const SpawnPoint = new Image();
-    SpawnPoint.src = "character/9.png";
-    const normalguy = new Image();
-    normalguy.src = "character/5.png"; 
-    const normalguy2 = new Image();
-    normalguy2.src = "character/5.png"; 
-    const influencer = new Image();
-    influencer.src = "character/7.png"; 
-    const END = new Image();
-    END.src = "character/10.png"; 
-
-    function update() {
+    
       // WASD 에 따라 위치 변경
       if (keys.w) img.y -= img.speed; // 위
       if (keys.s) img.y += img.speed; // 아래
@@ -73,56 +54,37 @@ const img = {x:50,y:0,size:100,speed:3}
       // 캔버스 밖으로 못 나가게 제한
       if (img.x < 0) img.x = 0;
       if (img.y < 0) img.y = 0;
-      if (img.x + img.size > canvas.width) {
-        img.x = canvas.width - img.size;
-      }
-      if (img.y + img.size > canvas.height) {
-        img.y = canvas.height - img.size;
-      }
-    }
+  }
+      function draw () {
+       ctx.clearRect(0, 0, 2000, 1000);
 
-    function draw() {
-      // 캔버스 지우기
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // 배경 그리기
-      ctx.fillStyle = "brown";
-      ctx.fillRect(50, 20, 150, 850);
-      ctx.fillRect(50, 750, 2000, 150);
-      ctx.fillStyle = "maroon";
-      ctx.fillRect(500, 300, 200, 140);
-      ctx.fillRect(1100, 300, 200, 140);
-      ctx.fillRect(1700, 300, 200, 140);
-      ctx.fillRect(500, 0, 50, 250);
-      
-      // 이미지 그리기
-      if (SpawnPoint.complete) {
-        ctx.drawImage(SpawnPoint, 100, 250, 100, 100);
-      }
-      if (normalguy.complete) {
-        ctx.drawImage(normalguy, 800, 500, 85, 150);
-      }
-      if (normalguy2.complete) {
-        ctx.drawImage(normalguy2, 1400, 500, 85, 150);
-      }
-      if (influencer.complete) {
-        ctx.drawImage(influencer, 1100, 500, 100, 150);
-      }
-      if (END.complete) {
-        ctx.drawImage(END, 600, 150, 100, 100);
-      }
-      
-      // 플레이어 그리기 (img.x, img.y 사용)
-      ctx.fillStyle = "red";
-      ctx.fillRect(img.x, img.y, img.size, img.size); 
+      // 플레이어 그리기
+      ctx.fillStyle = "red"
+      ctx.fillRect(100,100,100,100)
     }
-
     function loop() {
       update();
       draw();
       requestAnimationFrame(loop);
     }
     loop();
+    if (img.x + img.size > canvas.width) {
+        img.x = canvas.width - img.size;
+      }
+      if (img.y + img.size > canvas.height) {
+        img.y = canvas.height - img.size;
+      }
+    </script>
+    <script>
+     ctx.fillStyle = "brown"
+     ctx.fillRect(50,20,150,850)
+     ctx.fillRect(50,750,2000,150)
+     ctx.fillStyle = "maroon"
+     ctx.fillRect(500,300,200,140)
+     ctx.fillRect(1100,300,200,140)
+     ctx.fillRect(1700,300,200,140)
+     ctx.fillRect(500,0,50,250)
     </script>
     </body>
 </html>
+Welcome to Urban flame.... You can push people in this game, but I don't recommend it.
