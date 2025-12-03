@@ -6,34 +6,74 @@
     <body>
     <canvas id="Background" width="2000" height="1000"></canvas>
     <style> canvas {
-    background: rgb(130, 130, 211)
+    background: #8e8ee9
     }
     </style>
      <script>
      const canvas = document.getElementById("Background");
      const ctx = canvas.getContext("2d");
-     ctx.fillStyle = "red"
-     ctx.fillRect(0,400,100,100)
-     ctx.fillStyle = "cyan"
-     ctx.fillRect(400,200,100,100)
-     ctx.fillStyle = "cyan"
-     ctx.fillRect(400,550,100,100)
-     ctx.fillStyle = "white"
-     ctx.fillRect(600,50,100,100)
-     ctx.fillStyle = "white"
-     ctx.fillRect(600,750,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(1000,500,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(1000,100,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(1000,300,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(1000,700,100,100)
-     ctx.fillStyle = "yellow"
-     ctx.fillRect(1200,400,100,100)
      ctx.fillStyle = "gray"
      ctx.fillRect(100,375,650,150)
+       const img = new Image();
+  img.src = "character/1.png"; 
+  img.onload = function() {
+    ctx.drawImage(img, 0, 400, 100, 100);
+  }
+                  const Jaxson = new Image();
+  Jaxson.src = "character/8.png"; 
+  Jaxson.onload = function() {
+  ctx.drawImage(Jaxson, 400, 230, 90, 130);
+  }
+                    const Undyne = new Image();
+  Undyne.src = "character/8.png"; 
+  Undyne.onload = function() {
+  ctx.drawImage(Undyne, 400, 580, 90, 130);
+  }
+                      const Emc2 = new Image();
+  Emc2.src = "character/6.png"; 
+  Emc2.onload = function() {
+  ctx.drawImage(Emc2, 600, 50, 70, 110);
+  }
+                        const Emc3 = new Image();
+  Emc3.src = "character/6.png"; 
+  Emc3.onload = function() {
+  ctx.drawImage(Emc3, 600, 750, 70, 110);
+  }
+                          const Normalguy = new Image();
+  Normalguy.src = "character/5.png"; 
+  Normalguy.onload = function() {
+  ctx.drawImage(Normalguy, 1000, 100, 75, 110);
+  }
+                            const NormalGuyy = new Image();
+  NormalGuyy.src = "character/5.png"; 
+  NormalGuyy.onload = function() {
+  ctx.drawImage(NormalGuyy, 1000, 300, 75, 110);
+  }
+                              const NormalGuyyy = new Image();
+  NormalGuyyy.src = "character/5.png"; 
+  NormalGuyyy.onload = function() {
+  ctx.drawImage(NormalGuyy, 1000, 500, 75, 110);
+  }
+                                const Normalguyy = new Image();
+  Normalguyy.src = "character/5.png"; 
+  Normalguyy.onload = function() {
+  ctx.drawImage(Normalguyy, 1000, 700, 75, 110);
+  }
+                                  const influencer = new Image();
+  influencer.src = "character/7.png"; 
+  influencer.onload = function() {
+  ctx.drawImage(influencer, 1200, 400, 100, 120);
+  }
+                                    const SpawnPoint = new Image();
+  SpawnPoint.src = "character/9.png"; 
+  SpawnPoint.onload = function() {
+  ctx.drawImage(SpawnPoint, 0, 200, 100, 100);
+  }
+                                      const END = new Image();
+  END.src = "character/10.png"; 
+  END.onload = function() {
+  ctx.drawImage(END, 1500, 100, 100, 100);
+  }
      </script>
      </body>
 </html>

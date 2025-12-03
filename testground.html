@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Canvas WASD Move</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: system-ui, sans-serif;
+    }
+    canvas {
+      border: 2px solid #555;
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="600" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    // 플레이어(사각형) 기본 설정
+    const player = {
+      x: 100,
+      y: 100,
+      size: 40,
+      speed: 3,
+    };
+
+    // 현재 눌려 있는 키 상태
+    const keys = {
+      w: false,
+      a: false,
+      s: false,
+      d: false,
+    };
+
+    // 키 입력 이벤트 등록
+    window.addEventListener("keydown", (e) => {
+      const key = e.key.toLowerCase();
+      if (key in keys) {
+        keys[key] = true;
+      }
+    });
+
+    window.addEventListener("keyup", (e) => {
+      const key = e.key.toLowerCase();
+      if (key in keys) {
+        keys[key] = false;
+      }
+    });
+
+    function update() {
+      // WASD 에 따라 위치 변경
+      if (keys.w) player.y -= player.speed; // 위
+      if (keys.s) player.y += player.speed; // 아래
+      if (keys.a) player.x -= player.speed; // 왼쪽
+      if (keys.d) player.x += player.speed; // 오른쪽
+
+      // 캔버스 밖으로 못 나가게 제한
+      if (player.x < 0) player.x = 0;
+      if (player.y < 0) player.y = 0;
+      if (player.x + player.size > canvas.width) {
+        player.x = canvas.width - player.size;
+      }
+      if (player.y + player.size > canvas.height) {
+        player.y = canvas.height - player.size;
+      }
+    }
+
+    function draw() {
+      // 화면 지우기
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 플레이어 그리기
+      ctx.fillStyle = "#4caf50";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>
+

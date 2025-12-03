@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <meta charset="UTF-8" />
+    <title>Canvas</title>
+    </head>
+    <body>
+    <canvas id="Background" width="2000" height="1000"></canvas>
+    <style> canvas {
+    background: rgb(7, 137, 18)
+    }
+    </style> 
+    <script>
+  </script>
+     <script>
+     const canvas = document.getElementById("Background");
+     const ctx = canvas.getContext("2d");
+     ctx.fillStyle = "brown"
+     ctx.fillRect(50,20,150,850)
+     ctx.fillStyle = "brown"
+     ctx.fillRect(50,750,2000,150)
+     ctx.fillStyle = "maroon"
+     ctx.fillRect(500,300,200,140)
+     ctx.fillStyle = "maroon"
+     ctx.fillRect(1100,300,200,140)
+     ctx.fillStyle = "maroon"
+     ctx.fillRect(1700,300,200,140)
+     ctx.fillStyle = "maroon"
+     ctx.fillRect(500,0,50,250)
+const img = {x:50,y:0,size:100,speed:3}
+ // 현재 눌려 있는 키 상태
+    const keys = {
+      w: false,
+      a: false,
+      s: false,
+      d: false,
+    };
+
+    // 키 입력 이벤트 등록
+    window.addEventListener("keydown", (e) => {
+      const key = e.key.toLowerCase();
+      if (key in keys) {
+        keys[key] = true;
+      }
+    });
+
+    window.addEventListener("keyup", (e) => {
+      const key = e.key.toLowerCase();
+      if (key in keys) {
+        keys[key] = false;
+      }
+    });
+
+    function update() {}
+      // WASD 에 따라 위치 변경
+      if (keys.w) img.y -= img.speed; // 위
+      if (keys.s) img.y += img.speed; // 아래
+      if (keys.a) img.x -= img.speed; // 왼쪽
+      if (keys.d) img.x += img.speed; // 오른쪽
+
+      // 캔버스 밖으로 못 나가게 제한
+      if (img.x < 0) img.x = 0;
+      if (img.y < 0) img.y = 0;
+      if (img.x + img.size > canvas.width) {
+        img.x = canvas.width - img.size;
+      }
+      if (img.y + img.size > canvas.height) {
+        img.y = canvas.height - img.size;
+      }
+        function draw() {}
+      // 플레이어 그리기
+    ctx.fillStyle = "red"
+    ctx.fillRect(50, 0, 100, 100); 
+        function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    loop();
+      if (player.x + player.size > canvas.width) {
+        player.x = canvas.width - player.size;
+      }
+      if (img.y + img.size > canvas.height) {
+        img.y = canvas.height - img.size;
+      }
+      
+    const SpawnPoint = new Image();
+    SpawnPoint.src = "character/9.png";
+    SpawnPoint.onload = function() {
+    ctx.drawImage(SpawnPoint, 100, 250, 100, 100);
+  }
+    const normalguy = new Image();
+  normalguy.src = "character/5.png"; 
+  normalguy.onload = function() {
+    ctx.drawImage(normalguy, 800, 500, 85, 150);
+  }
+  const normalguy2 = new Image();
+  normalguy2.src = "character/5.png"; 
+  normalguy2.onload = function() {
+    ctx.drawImage(normalguy2, 1400, 500, 85, 150);
+  }
+  const influencer = new Image();
+  influencer.src = "character/7.png"; 
+  influencer.onload = function() {
+    ctx.drawImage(influencer, 1100, 500, 100, 150);
+  }
+    const END = new Image();
+  END.src = "character/10.png"; 
+  END.onload = function() {
+    ctx.drawImage(END, 600, 150, 100, 100);
+  }
+    </script>
+    </body>
+</html>
+Welcome to Urban flame.... You can choose to attack people with your powers, but I don't recommend it.

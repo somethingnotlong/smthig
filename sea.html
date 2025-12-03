@@ -14,23 +14,68 @@
      const ctx = canvas.getContext("2d");
      ctx.fillStyle = "cyan"
      ctx.fillRect(0,0,2000,300)
-     ctx.fillStyle = "red"
-     ctx.fillRect(50,800,100,100)
-    ctx.fillStyle = "pink"
-     ctx.fillRect(200,800,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(500,400,100,100)
-     ctx.fillStyle = "yellow"
-     ctx.fillRect(500,600,100,100)
-    ctx.fillStyle = "blue"
-     ctx.fillRect(500,800,100,100)
-    ctx.fillStyle = "orange"
-     ctx.fillRect(700,500,100,100)
-    ctx.fillStyle = "black"
-     ctx.fillRect(700,300,100,100)
-     ctx.fillStyle = "orange"
-     ctx.fillRect(700,700,100,100)
+     const img = new Image();
+  img.src = "character/1.png";
+  img.onload = function() {
+    ctx.drawImage(img, 50, 800, 100, 100);
+  }
+      const SpawnPoint = new Image();
+  SpawnPoint.src = "character/9.png"; 
+  SpawnPoint.onload = function() {
+    ctx.drawImage(SpawnPoint, 200, 800, 100, 100);
+  }
+     const FRENZY = new Image();
+  FRENZY.src = "character/11.png";
+  FRENZY.onload = function() {
+    ctx.drawImage(FRENZY, 300, 800, 100, 100);
+  }
+        const NormalGuyy = new Image();
+  NormalGuyy.src = "character/5.png";
+  NormalGuyy.onload = function() {
+    ctx.drawImage(NormalGuyy, 500, 750, 85, 150);
+  }
+          const NormalGuyyy = new Image();
+  NormalGuyyy.src = "character/5.png";
+  NormalGuyyy.onload = function() {
+    ctx.drawImage(NormalGuyyy, 500, 350, 85, 150);
+  }
+            const influencer = new Image();
+  influencer.src = "character/7.png";
+  influencer.onload = function() {
+    ctx.drawImage(influencer, 550, 550, 100, 120);
+  }
+             const HammerOfJustice = new Image();
+  HammerOfJustice.src = "character/3.png";
+  HammerOfJustice.onload = function() {
+    ctx.drawImage(HammerOfJustice, 1200, 500, 80, 150);
+  }  
+                  const Adventurer = new Image();
+ Adventurer.src = "character/3.png";
+  Adventurer.onload = function() {
+    ctx.drawImage(Adventurer, 1200, 700, 80, 150);
+  }
+                    const CEO = new Image();
+  CEO.src = "character/4.png";
+  CEO.onload = function() {
+    ctx.drawImage(CEO, 1200, 300, 100, 150);
+  }
+    const END = new Image();
+  END.src = "character/10.png"; 
+  END.onload = function() {
+    ctx.drawImage(END, 1500, 500, 100, 100);
+  }
      </script>
      </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 Good you are reading these, but don't you have other things to do?

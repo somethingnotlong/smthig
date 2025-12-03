@@ -6,20 +6,14 @@
     <body>
     <canvas id="Background" width="2000" height="1000"></canvas>
     <style> canvas {
-    background: rgb(141, 137, 145)
+    background: rgb(140, 137, 145)
     }
     </style>
      <script>
      const canvas = document.getElementById("Background");
      const ctx = canvas.getContext("2d");
-     ctx.fillStyle = "red"
-     ctx.fillRect(100,300,100,100)
-     ctx.fillStyle = "pink"
-     ctx.fillRect(375,550,150,150)
      ctx.fillStyle = "gray"
      ctx.fillRect(350,350,200,200)
-     ctx.fillStyle = "pink"
-     ctx.fillRect(375,200,150,150)
      ctx.fillStyle = "gray"
      ctx.fillRect(350,0,200,200)
      ctx.fillStyle = "gray"
@@ -36,20 +30,66 @@
      ctx.fillRect(1050,0,200,200)
      ctx.fillStyle = "gray"
      ctx.fillRect(1050,700,200,200)
-     ctx.fillStyle = "white"
-     ctx.fillRect(750,225,100,100)
-     ctx.fillStyle = "black"
-     ctx.fillRect(750,575,100,100)
-     ctx.fillStyle = "orange"
-     ctx.fillRect(1100,225,100,100)
-     ctx.fillStyle = "orange"
-     ctx.fillRect(1100,575,100,100)
-     ctx.fillStyle = "cyan"
-     ctx.fillRect(1500,400,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(1600,200,100,100)
-     ctx.fillStyle = "blue"
-     ctx.fillRect(1600,600,100,100)
+       const SpawnPoint = new Image();
+  SpawnPoint.src = "character/9.png"; 
+  SpawnPoint.onload = function() {
+    ctx.drawImage(SpawnPoint, 200, 100, 100, 100);
+  }
+  const img = new Image();
+  img.src = "character/1.png"; 
+  img.onload = function() {
+    ctx.drawImage(img, 100, 100, 100, 100);
+  }
+    const Emc2 = new Image();
+  Emc2.src = "character/6.png"; 
+  Emc2.onload = function() {
+    ctx.drawImage(Emc2, 750, 215, 75, 115);
+  }
+      const CEO = new Image();
+  CEO.src = "character/4.png"; 
+  CEO.onload = function() {
+    ctx.drawImage(CEO, 750, 550, 75, 150);
+  }
+        const FRENZY = new Image();
+  FRENZY.src = "character/11.png"; 
+  FRENZY.onload = function() {
+  ctx.drawImage(FRENZY, 375, 550, 150, 150);
+  }
+          const FRENZYY = new Image();
+  FRENZYY.src = "character/11.png"; 
+  FRENZYY.onload = function() {
+  ctx.drawImage(FRENZYY, 375, 200, 150, 150);
+  }
+            const Adventurer = new Image();
+  Adventurer.src = "character/3.png"; 
+  Adventurer.onload = function() {
+  ctx.drawImage(Adventurer, 1100, 215, 55, 125);
+  }
+              const AdVENTurer = new Image();
+  AdVENTurer.src = "character/3.png"; 
+  AdVENTurer.onload = function() {
+  ctx.drawImage(AdVENTurer, 1100, 570, 55, 125);
+  }
+                const Jaxson = new Image();
+  Jaxson.src = "character/8.png"; 
+  Jaxson.onload = function() {
+  ctx.drawImage(Jaxson, 1500, 400, 90, 130);
+  }
+                  const NormalGuyy = new Image();
+  NormalGuyy.src = "character/5.png"; 
+  NormalGuyy.onload = function() {
+  ctx.drawImage(NormalGuyy, 1600, 200, 75, 120);
+  }
+                    const NormalGuyyy = new Image();
+  NormalGuyyy.src = "character/5.png"; 
+  NormalGuyyy.onload = function() {
+  ctx.drawImage(NormalGuyyy, 1600, 600, 75, 120);
+  }
+                      const END = new Image();
+  END.src = "character/10.png"; 
+  END.onload = function() {
+  ctx.drawImage(END, 1600, 100, 100, 100);
+  }
      </script>
      </body>
 </html>
