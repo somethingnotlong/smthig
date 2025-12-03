@@ -28,8 +28,8 @@
       s: false,
       d: false,
     };
-            // 키 입력 이벤트 등록
-      function physics(){
+
+    // 키 입력 이벤트 등록 (한 번만 등록)
     window.addEventListener("keydown", (e) => {
       const key = e.key.toLowerCase();
       if (key in keys) {
@@ -44,7 +44,8 @@
       }
     });
 
-    
+    // 위치 업데이트 함수
+    function update() {
       // WASD 에 따라 위치 변경
       if (keys.w) img.y -= img.speed; // 위
       if (keys.s) img.y += img.speed; // 아래
@@ -54,36 +55,41 @@
       // 캔버스 밖으로 못 나가게 제한
       if (img.x < 0) img.x = 0;
       if (img.y < 0) img.y = 0;
-  }
-      function draw () {
-       ctx.clearRect(0, 0, 2000, 1000);
-
-      // 플레이어 그리기
-      ctx.fillStyle = "red"
-      ctx.fillRect(100,100,100,100)
+      if (img.x + img.size > canvas.width) {
+        img.x = canvas.width - img.size;
+      }
+      if (img.y + img.size > canvas.height) {
+        img.y = canvas.height - img.size;
+      }
     }
+
+    // 화면 그리기 함수
+    function draw() {
+      // 캔버스 지우기
+      ctx.clearRect(0, 0, 2000, 1000);
+
+      // 배경 그리기
+      ctx.fillStyle = "brown";
+      ctx.fillRect(50, 20, 150, 850);
+      ctx.fillRect(50, 750, 2000, 150);
+      ctx.fillStyle = "maroon";
+      ctx.fillRect(500, 300, 200, 140);
+      ctx.fillRect(1100, 300, 200, 140);
+      ctx.fillRect(1700, 300, 200, 140);
+      ctx.fillRect(500, 0, 50, 250);
+
+      // 플레이어 그리기 (img.x, img.y 사용)
+      ctx.fillStyle = "red";
+      ctx.fillRect(img.x, img.y, img.size, img.size);
+    }
+
+    // 게임 루프
     function loop() {
       update();
       draw();
       requestAnimationFrame(loop);
     }
     loop();
-    if (img.x + img.size > canvas.width) {
-        img.x = canvas.width - img.size;
-      }
-      if (img.y + img.size > canvas.height) {
-        img.y = canvas.height - img.size;
-      }
-    </script>
-    <script>
-     ctx.fillStyle = "brown"
-     ctx.fillRect(50,20,150,850)
-     ctx.fillRect(50,750,2000,150)
-     ctx.fillStyle = "maroon"
-     ctx.fillRect(500,300,200,140)
-     ctx.fillRect(1100,300,200,140)
-     ctx.fillRect(1700,300,200,140)
-     ctx.fillRect(500,0,50,250)
     </script>
     </body>
 </html>
