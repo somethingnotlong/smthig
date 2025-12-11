@@ -18,14 +18,14 @@
          const img = {
            x: 100,
            y: 100,
-           size: 40,
+           size: 80,
            speed: 6,
          };
          
          const Normalguy = {
            otherx: 200,
            othery: 750,
-           othersize: 40,
+           othersize: 80,
            otherspeed: 2,
            directionX: Math.random() > 0.5 ? 1 : -1,
            directionY: Math.random() > 0.5 ? 1 : -1,
@@ -119,12 +119,12 @@
            
            // 플레이어 그리기 (이미 로드된 이미지 사용)
            if (imgImage.complete) {
-             ctx.drawImage(imgImage, img.x, img.y, img.size * 2, img.size * 2);
+             ctx.drawImage(imgImage, img.x, img.y, img.size, img.size);
            }
            
            // Normalguy 그리기 (이미 로드된 이미지 사용)
            if (NormalguyImage.complete) {
-             ctx.drawImage(NormalguyImage, Normalguy.otherx, Normalguy.othery, Normalguy.othersize * 2, Normalguy.othersize * 2);
+             ctx.drawImage(NormalguyImage, Normalguy.otherx, Normalguy.othery, Normalguy.othersize, Normalguy.othersize);
            }
          }
          
