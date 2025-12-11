@@ -14,7 +14,6 @@
          const canvas = document.getElementById("canvas");
          const ctx = canvas.getContext("2d");
          
-         // 플레이어(사각형) 기본 설정
          const img = {
            x: 100,
            y: 100,
@@ -28,6 +27,15 @@
            a: false,
            s: false,
            d: false,
+         };
+
+           const Normalguy = {
+           otherx: 200,
+           othery: 750,
+           othersize: 40,
+           otherspeed: 2,
+           directionX:Math.random() > 0.5 ? 1 : -1,
+           directionY:Math.random() > 0.5 ? 1 : -1,
          };
          
          // 키 입력 이벤트 등록 (한 번만 등록)
@@ -62,7 +70,28 @@
            if (img.y + img.size > canvas.height) {
              img.y = canvas.height - img.size;
            }
-         }
+
+            // 방향에 따라 위치 변경
+             Normalguy.otherx += Normalguy.otherspeed * Normalguy.directionX;
+             Normalguy.othery += Normalguy.otherspeed * Normalguy.directionY;
+         
+           // 캔버스 밖으로 못 나가게 제한
+             if (Normalguy.otherx < 0) {
+               Normalguy.otherx = 0;
+               Normalguy.directionX = 1;
+             }
+             if (Normalguy.othery < 0) {
+               Normalguy.othery = 0;
+               Normalguy.directionY = 1;
+             }
+             if (Normalguy.otherx + Normalguy.othersize > canvas.width) {
+               Normalguy.otherx = canvas.width - Normalguy.othersize;
+               Normalguy.directionX = -1;
+             }
+             if (Normalguy.othery + Normalguy.othersize > canvas.height) {
+               Normalguy.othery = canvas.height - Normalguy.othersize;
+               Normalguy.directionY = -1;
+              }}
          
          // 화면 그리기 함수
          function draw(){ 
@@ -77,13 +106,21 @@
            ctx.fillRect(500, 300, 200, 140);
            ctx.fillRect(1100, 300, 200, 140);
            ctx.fillRect(1700, 300, 200, 140);
-           ctx.fillRect(500, 0, 50, 250);
-         
-           // 플레이어 그리기 (img.x, img.y 사용)
-               ctx.fillStyle = "#4caf50";
-           ctx.fillRect(img.x, img.y, img.size, img.size);}
-         
-         
+           ctx.fillRect(500, 0, 50, 250); 
+
+          
+        img = new Image();
+         img.src = "character/1.png";
+         img.onload = function() {
+         ctx.drawImage(img, x, y, size, size);
+         }
+
+           Normalguy = new Image();
+         Normalguy.src = "character/5.png";
+         Normalguy.onload = function() {
+         ctx.drawImage(Normalguy, otherx, othery, othersize, othersize);
+         }}
+
          // 게임 루프
          function loop() {
            update();
@@ -92,44 +129,6 @@
          }
          loop();
       </script>
-      <script>
-         // 플레이어(사각형) 기본 설정
-         const Normalguy = {
-           otherx: 200,
-           othery: 750,
-           othersize: 40,
-           otherspeed: 2,
-           directionX:Math.random() > 0.5 ? 1 : -1,
-           directionY:Math.random() > 0.5 ? 1 : -1,
-         };
-         function update() {
-                     // 방향에 따라 위치 변경
-             Normalguy.otherx += Normalguy.otherspeed * Normalguy.directionX;
-             Normalguy.othery += Normalguy.otherspeed * Normalguy.directionY;
-         
-           // 캔버스 밖으로 못 나가게 제한
-             if (Normalguy.x < 0) {
-               Normalguy.x = 0;
-               Normalguy.directionX = 1;
-             }
-             if (Normalguy.y < 0) {
-               Normalguy.y = 0;
-               Normalguy.directionY = 1;
-             }
-             if (Normalguy.otherx + Normalguy.othersize > canvas.width) {
-               Normalguy.otherx = canvas.width - Normalguy.othersize;
-               Normalguy.directionX = -1;
-             }
-             if (Normalguy.othery + Normalguy.othersize > canvas.height) {
-               Normalguy.othery = canvas.height - Normalguy.othersize;
-               Normalguy.directionY = -1;
-             }}
-         // 화면 그리기 함수
-         function draw(){ 
-        // 플레이어 그리기 (img.x, img.y 사용)
-               ctx.fillStyle = "#03045E";
-           ctx.fillRect(Normalguy.otherx, Normalguy.othery, Normalguy.othersize, Normalguy.othersize);}
-      </script>
    </body>
 </html>
-Welcome to Urban flame.... You can push people in this game, but I don't recommend it.
+Welcome to Urban flame.... You can push people in this game, but I don't recommend it
