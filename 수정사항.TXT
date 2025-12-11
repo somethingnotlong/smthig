@@ -1,0 +1,23 @@
+1. 24번 줄 (img 객체 다음)
+추가: Normalguy 객체를 첫 번째 스크립트에 추가
+예: const Normalguy = { otherx: 200, othery: 750, ... };
+2. 49번 줄 (update() 함수 안)
+추가: Normalguy 위치 업데이트 코드 추가
+예: Normalguy.otherx += Normalguy.otherspeed * Normalguy.directionX; 등
+3. 65번 줄 (update() 함수 끝)
+추가: Normalguy 경계 체크 코드 추가
+4. 68번 줄 (draw() 함수 안)
+추가: Normalguy 그리기 코드 추가
+예: ctx.fillStyle = "#03045E"; ctx.fillRect(Normalguy.otherx, ...);
+5. 95-132번 줄
+삭제: 두 번째 <script> 태그 전체 삭제 (함수 이름 충돌 방지)
+6. 111-112번 줄 (두 번째 스크립트 내)
+수정: Normalguy.x → Normalguy.otherx
+수정: Normalguy.x = 0 → Normalguy.otherx = 0
+7. 115-116번 줄 (두 번째 스크립트 내)
+수정: Normalguy.y → Normalguy.othery
+수정: Normalguy.y = 0 → Normalguy.othery = 0
+8. 128번 줄 (두 번째 스크립트의 draw() 함수)
+추가: ctx.clearRect(0, 0, 2000, 1000); 추가 (캔버스 지우기)
+9. 135번 줄
+삭제: 불필요한 텍스트 제거
