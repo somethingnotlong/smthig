@@ -1,23 +1,36 @@
-1. 24번 줄 (img 객체 다음)
-추가: Normalguy 객체를 첫 번째 스크립트에 추가
-예: const Normalguy = { otherx: 200, othery: 750, ... };
-2. 49번 줄 (update() 함수 안)
-추가: Normalguy 위치 업데이트 코드 추가
-예: Normalguy.otherx += Normalguy.otherspeed * Normalguy.directionX; 등
-3. 65번 줄 (update() 함수 끝)
-추가: Normalguy 경계 체크 코드 추가
-4. 68번 줄 (draw() 함수 안)
-추가: Normalguy 그리기 코드 추가
-예: ctx.fillStyle = "#03045E"; ctx.fillRect(Normalguy.otherx, ...);
-5. 95-132번 줄
-삭제: 두 번째 <script> 태그 전체 삭제 (함수 이름 충돌 방지)
-6. 111-112번 줄 (두 번째 스크립트 내)
-수정: Normalguy.x → Normalguy.otherx
-수정: Normalguy.x = 0 → Normalguy.otherx = 0
-7. 115-116번 줄 (두 번째 스크립트 내)
-수정: Normalguy.y → Normalguy.othery
-수정: Normalguy.y = 0 → Normalguy.othery = 0
-8. 128번 줄 (두 번째 스크립트의 draw() 함수)
-추가: ctx.clearRect(0, 0, 2000, 1000); 추가 (캔버스 지우기)
-9. 135번 줄
-삭제: 불필요한 텍스트 제거
+=== 현재 코드의 문제점 ===
+
+1. 94번 줄
+   문제: 닫는 중괄호가 두 개 (`}}`) - update() 함수를 중복으로 닫고 있음
+   수정: `}}` → `}` (하나만 남겨야 함)
+
+2. 112-116번 줄 (draw() 함수 내)
+   문제: img 객체를 Image 객체로 덮어쓰고 있음
+   - 원래 img는 {x: 100, y: 100, size: 40, speed: 6} 객체인데 Image 객체로 바꾸면 기존 속성들을 잃어버림
+   - 매 프레임마다 Image 객체를 새로 생성하면 비효율적이고 메모리 누수 발생
+   - 115번 줄: x, y, size 변수가 정의되지 않음 (img.x, img.y, img.size를 사용해야 함)
+   - img.onload는 비동기이므로 매 프레임마다 호출되면 타이밍 문제 발생
+   수정: 
+   - Image 객체는 스크립트 상단에서 한 번만 생성하고 미리 로드
+   - draw() 함수에서는 ctx.drawImage()로 그리기만 하기
+   - ctx.drawImage(imgImage, img.x, img.y, img.size, img.size) 형태로 수정
+
+3. 118-122번 줄 (draw() 함수 내)
+   문제: Normalguy 객체를 Image 객체로 덮어쓰고 있음
+   - 원래 Normalguy는 {otherx, othery, othersize, ...} 객체인데 Image로 바꾸면 기존 속성들을 잃어버림
+   - 매 프레임마다 Image 객체를 새로 생성
+   - 121번 줄: otherx, othery, othersize 변수가 정의되지 않음 (Normalguy.otherx 등을 사용해야 함)
+   - 닫는 중괄호가 두 개 (`}}`)
+   수정:
+   - Image 객체는 스크립트 상단에서 한 번만 생성하고 미리 로드 (예: const NormalguyImage = new Image())
+   - draw() 함수에서는 ctx.drawImage()로 그리기만 하기
+   - ctx.drawImage(NormalguyImage, Normalguy.otherx, Normalguy.othery, Normalguy.othersize, Normalguy.othersize) 형태로 수정
+
+4. 122번 줄
+   문제: 닫는 중괄호가 두 개 (`}}`) - draw() 함수를 중복으로 닫고 있음
+   수정: `}}` → `}` (하나만 남겨야 함)
+
+5. 전체 구조 문제
+   - Image 객체는 게임 루프 밖에서 미리 로드해야 함
+   - draw() 함수에서는 로드된 이미지를 그리기만 해야 함
+   - 원래 객체(img, Normalguy)와 이미지 객체를 분리해야 함
