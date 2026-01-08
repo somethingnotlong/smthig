@@ -16,15 +16,15 @@
          
          // 플레이어(사각형) 기본 설정
          const img = {
-           x: 100,
+           x: 250,
            y: 100,
            size: 80,
            speed: 12,
          };
          
          const Normalguy = {
-           otherx: 200,
-           othery: 750,
+           otherx: 350,
+           othery: 200,
            othersize: 80,
            otherspeed: 2,
            directionX: Math.random() > 0.5 ? 1 : -1,
@@ -32,8 +32,8 @@
          };
          
            const Normalboi = {
-           otherX: 300,
-           otherY: 850,
+           otherX: 450,
+           otherY: 250,
            otherSIZE: 80,
            otherSPEED: 2,
            directionx: Math.random() > 0.5 ? 1 : -1,
@@ -41,8 +41,8 @@
          };
          
           const Youtuber = {
-           ThirdX: 750,
-           ThirdY: 300,
+           ThirdX: 300,
+           ThirdY: 150,
            ThirdSize: 90,
            ThirdSpeed: 2,
            diX: Math.random() > 0.5 ? 1.5 : -1,
@@ -67,6 +67,37 @@
          
          const YoutuberImage = new Image();
          YoutuberImage.src = "character/7.png";
+         
+         // 벽 배열 정의 (x, y, width, height)
+         const walls = [
+           {x: 50, y: 20, width: 150, height: 850},  // 왼쪽 긴 벽
+           {x: 500, y: 300, width: 200, height: 170},
+           {x: 1000, y: 300, width: 200, height: 170},
+           {x: 1250, y: 300, width: 200, height: 170},
+           {x: 750, y: 300, width: 200, height: 170},
+           {x: 500, y: 490, width: 200, height: 170},
+           {x: 1000, y: 490, width: 200, height: 170},
+           {x: 1250, y: 490, width: 200, height: 170},
+           {x: 750, y: 490, width: 200, height: 170},
+           {x: 500, y: 680, width: 200, height: 170},
+           {x: 1000, y: 680, width: 200, height: 170},
+           {x: 1250, y: 680, width: 200, height: 170},
+           {x: 750, y: 680, width: 200, height: 170},
+         ];
+         
+         // 충돌 감지 함수 (충돌 여부만 반환)
+         function checkWallCollision(x, y, size) {
+           for (let wall of walls) {
+             // 충돌 체크
+             if (x < wall.x + wall.width &&
+                 x + size > wall.x &&
+                 y < wall.y + wall.height &&
+                 y + size > wall.y) {
+               return true;
+             }
+           }
+           return false;
+         }
          
          // 현재 눌려 있는 키 상태
          const keys = {
@@ -93,12 +124,22 @@
          
          // 위치 업데이트 함수
          function update() {
+           // 플레이어 이동 처리
+           let prevX = img.x;
+           let prevY = img.y;
+           
            // WASD 에 따라 위치 변경
            if (keys.w) img.y -= img.speed; // 위
            if (keys.s) img.y += img.speed; // 아래
            if (keys.a) img.x -= img.speed; // 왼쪽
            if (keys.d) img.x += img.speed; // 오른쪽
          
+           // 벽 충돌 체크 먼저
+           if (checkWallCollision(img.x, img.y, img.size)) {
+             img.x = prevX;
+             img.y = prevY;
+           }
+           
            // 캔버스 밖으로 못 나가게 제한
            if (img.x < 0) img.x = 0;
            if (img.y < 0) img.y = 0;
@@ -106,16 +147,26 @@
              img.x = canvas.width - img.size;
            }
            if (img.y + img.size > canvas.height) {
-             img.y = canvas.height - img.size;}
-           if (img.x + img.size > 480 || img.x + img.size < 1330 && img.y + img.size > 380) {
-            img.y = 205}
+             img.y = canvas.height - img.size;
+           }
            
            
                       
            // Normalguy 위치 업데이트 - 방향에 따라 위치 변경
+           let prevNormalguyX = Normalguy.otherx;
+           let prevNormalguyY = Normalguy.othery;
+           
            Normalguy.otherx += Normalguy.otherspeed * Normalguy.directionX;
            Normalguy.othery += Normalguy.otherspeed * Normalguy.directionY;
          
+           // Normalguy 벽 충돌 체크
+           if (checkWallCollision(Normalguy.otherx, Normalguy.othery, Normalguy.othersize)) {
+             Normalguy.otherx = prevNormalguyX;
+             Normalguy.othery = prevNormalguyY;
+             Normalguy.directionX *= -1;
+             Normalguy.directionY *= -1;
+           }
+           
            // Normalguy 경계 체크 - 캔버스 밖으로 못 나가게 제한
            if (Normalguy.otherx < 0) {
              Normalguy.otherx = 0;
@@ -131,12 +182,24 @@
            }
            if (Normalguy.othery + Normalguy.othersize > canvas.height) {
              Normalguy.othery = canvas.height - Normalguy.othersize;
-             Normalguy.directionY = -1;}
+             Normalguy.directionY = -1;
+           }
          
-             // Normalboi 위치 업데이트 - 방향에 따라 위치 변경
+           // Normalboi 위치 업데이트 - 방향에 따라 위치 변경
+           let prevNormalboiX = Normalboi.otherX;
+           let prevNormalboiY = Normalboi.otherY;
+           
            Normalboi.otherX += Normalboi.otherSPEED * Normalboi.directionx;
            Normalboi.otherY += Normalboi.otherSPEED * Normalboi.directiony;
          
+           // Normalboi 벽 충돌 체크
+           if (checkWallCollision(Normalboi.otherX, Normalboi.otherY, Normalboi.otherSIZE)) {
+             Normalboi.otherX = prevNormalboiX;
+             Normalboi.otherY = prevNormalboiY;
+             Normalboi.directionx *= -1;
+             Normalboi.directiony *= -1;
+           }
+           
            // Normalboi 경계 체크 - 캔버스 밖으로 못 나가게 제한
            if (Normalboi.otherX < 0) {
              Normalboi.otherX = 0;
@@ -152,12 +215,24 @@
            }
            if (Normalboi.otherY + Normalboi.otherSIZE > canvas.height) {
              Normalboi.otherY = canvas.height - Normalboi.otherSIZE;
-             Normalboi.directiony = -1;}
+             Normalboi.directiony = -1;
+           }
          
            // Youtuber 위치 업데이트 - 방향에 따라 위치 변경
+           let prevYoutuberX = Youtuber.ThirdX;
+           let prevYoutuberY = Youtuber.ThirdY;
+           
            Youtuber.ThirdX += Youtuber.ThirdSpeed * Youtuber.diX;
            Youtuber.ThirdY += Youtuber.ThirdSpeed * Youtuber.diY;
          
+           // Youtuber 벽 충돌 체크
+           if (checkWallCollision(Youtuber.ThirdX, Youtuber.ThirdY, Youtuber.ThirdSize)) {
+             Youtuber.ThirdX = prevYoutuberX;
+             Youtuber.ThirdY = prevYoutuberY;
+             Youtuber.diX *= -1;
+             Youtuber.diY *= -1;
+           }
+           
            // Youtuber 경계 체크 - 캔버스 밖으로 못 나가게 제한
            if (Youtuber.ThirdX < 0) {
              Youtuber.ThirdX = 0;
@@ -174,29 +249,22 @@
            if (Youtuber.ThirdY + Youtuber.ThirdSize > canvas.height) {
              Youtuber.ThirdY = canvas.height - Youtuber.ThirdSize;
              Youtuber.diY = -1;
-           }}
+           }
+         }
          
          // 화면 그리기 함수
          function draw(){ 
            // 캔버스 지우기
            ctx.clearRect(0, 0, 2000, 1000);
          
-           // 배경 그리기
+           // 배경 그리기 - 벽들 그리기
            ctx.fillStyle = "brown";
-           ctx.fillRect(50, 20, 150, 850);
+           ctx.fillRect(walls[0].x, walls[0].y, walls[0].width, walls[0].height);
+           
            ctx.fillStyle = "maroon";
-           ctx.fillRect(500, 300, 200, 170);
-           ctx.fillRect(1000, 300, 200, 170);
-           ctx.fillRect(1250, 300, 200, 170);
-           ctx.fillRect(750, 300, 200, 170);
-           ctx.fillRect(500, 490, 200, 170);
-           ctx.fillRect(1000, 490, 200, 170);
-           ctx.fillRect(1250, 490, 200, 170);
-           ctx.fillRect(750, 490, 200, 170);
-           ctx.fillRect(500, 680, 200, 170);
-           ctx.fillRect(1000, 680, 200, 170);
-           ctx.fillRect(1250, 680, 200, 170);
-           ctx.fillRect(750, 680, 200, 170);
+           for (let i = 1; i < walls.length; i++) {
+             ctx.fillRect(walls[i].x, walls[i].y, walls[i].width, walls[i].height);
+           }
            
             // End 그리기 (이미 로드된 이미지 사용)
            if (erdragonImage.complete) {
