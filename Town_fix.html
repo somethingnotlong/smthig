@@ -11,6 +11,8 @@
          }
       </style>
       <script>
+        var lifeCount = 3
+         console.log(lifeCount)
          const canvas = document.getElementById("canvas");
          const ctx = canvas.getContext("2d");
          
@@ -23,7 +25,7 @@
          };
          
          const Normalguy = {
-           otherx: 350,
+           otherx: 300,
            othery: 200,
            othersize: 80,
            otherspeed: 2,
@@ -32,8 +34,8 @@
          };
          
            const Normalboi = {
-           otherX: 450,
-           otherY: 250,
+           otherX: 120,
+           otherY: 450,
            otherSIZE: 80,
            otherSPEED: 2,
            directionx: Math.random() > 0.5 ? 1 : -1,
@@ -70,7 +72,6 @@
          
          // 벽 배열 정의 (x, y, width, height)
          const walls = [
-           {x: 50, y: 20, width: 150, height: 850},  // 왼쪽 긴 벽
            {x: 500, y: 300, width: 200, height: 170},
            {x: 1000, y: 300, width: 200, height: 170},
            {x: 1250, y: 300, width: 200, height: 170},
@@ -250,7 +251,10 @@
              Youtuber.ThirdY = canvas.height - Youtuber.ThirdSize;
              Youtuber.diY = -1;
            }
-         }
+
+         //damage requirements & actual damage
+         if (img.x == Normalguy.otherx) {
+         lifeCount = 2}}
          
          // 화면 그리기 함수
          function draw(){ 
@@ -258,10 +262,9 @@
            ctx.clearRect(0, 0, 2000, 1000);
          
            // 배경 그리기 - 벽들 그리기
-           ctx.fillStyle = "brown";
+           ctx.fillStyle = "maroon";
            ctx.fillRect(walls[0].x, walls[0].y, walls[0].width, walls[0].height);
            
-           ctx.fillStyle = "maroon";
            for (let i = 1; i < walls.length; i++) {
              ctx.fillRect(walls[i].x, walls[i].y, walls[i].width, walls[i].height);
            }
@@ -280,7 +283,7 @@
            }
            // Normalguy 그리기 (이미 로드된 이미지 사용)
            if (NormalguyImage.complete) {
-             ctx.drawImage(NormalguyImage, Normalguy.otherx, Normalguy.othery, Normalguy.othersize, Normalguy.othersize);
+             ctx.drawImage(NormalguyImage, Normalguy.otherx, Normalguy.othery, Normalguy.othersize, 125);
            }
            // Normalboi 그리기 (이미 로드된 이미지 사용)
            if (NormalboiImage.complete){
