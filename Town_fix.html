@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Urban flame stage 1</title>
+   </head>
+   <body>
+      <canvas id="canvas" width="1700" height="925"></canvas>
+      <style> canvas {
+         background: rgb(7, 137, 18)
+         }
+      </style>
+      <script>
+         const canvas = document.getElementById("canvas");
+         const ctx = canvas.getContext("2d");
+         
+         // 플레이어(사각형) 기본 설정
+         const img = {
+           x: 100,
+           y: 100,
+           size: 80,
+           speed: 12,
+         };
+         
+         const Normalguy = {
+           otherx: 200,
+           othery: 750,
+           othersize: 80,
+           otherspeed: 2,
+           directionX: Math.random() > 0.5 ? 1 : -1,
+           directionY: Math.random() > 0.5 ? 1 : -1,
+         };
+         
+           const Normalboi = {
+           otherX: 300,
+           otherY: 850,
+           otherSIZE: 80,
+           otherSPEED: 2,
+           directionx: Math.random() > 0.5 ? 1 : -1,
+           directiony: Math.random() > 0.5 ? 1 : -1,
+         };
+         
+          const Youtuber = {
+           ThirdX: 750,
+           ThirdY: 300,
+           ThirdSize: 90,
+           ThirdSpeed: 2,
+           diX: Math.random() > 0.5 ? 1.5 : -1,
+           diY: Math.random() > 0.5 ? 1.5 : -1,
+         };
+         
+         // 이미지 객체 생성 및 로드 (한 번만 생성)
+         const DontMakeThisACultImage = new Image();
+         DontMakeThisACultImage.src = "character/9.png";
+         
+         const erdragonImage = new Image();
+         erdragonImage.src = "character/10.png";
+         
+         const imgImage = new Image();
+         imgImage.src = "character/1.png";
+         
+         const NormalguyImage = new Image();
+         NormalguyImage.src = "character/5.png";
+         
+                  const NormalboiImage = new Image();
+         NormalboiImage.src = "character/5.png";
+         
+         const YoutuberImage = new Image();
+         YoutuberImage.src = "character/7.png";
+         
+         // 현재 눌려 있는 키 상태
+         const keys = {
+           w: false,
+           a: false,
+           s: false,
+           d: false,
+         };
+         
+         // 키 입력 이벤트 등록 (한 번만 등록)
+         window.addEventListener("keydown", (e) => {
+           const key = e.key.toLowerCase();
+           if (key in keys) {
+             keys[key] = true;
+           }
+         });
+         
+         window.addEventListener("keyup", (e) => {
+           const key = e.key.toLowerCase();
+           if (key in keys) {
+             keys[key] = false;
+           }
+         });
+         
+         // 위치 업데이트 함수
+         function update() {
+           // WASD 에 따라 위치 변경
+           if (keys.w) img.y -= img.speed; // 위
+           if (keys.s) img.y += img.speed; // 아래
+           if (keys.a) img.x -= img.speed; // 왼쪽
+           if (keys.d) img.x += img.speed; // 오른쪽
+         
+           // 캔버스 밖으로 못 나가게 제한
+           if (img.x < 0) img.x = 0;
+           if (img.y < 0) img.y = 0;
+           if (img.x + img.size > canvas.width) {
+             img.x = canvas.width - img.size;
+           }
+           if (img.y + img.size > canvas.height) {
+             img.y = canvas.height - img.size;}
+           if (img.x + img.size > 480 || img.x + img.size < 1330 && img.y + img.size > 380) {
+            img.y = 205}
+           
+           
+                      
+           // Normalguy 위치 업데이트 - 방향에 따라 위치 변경
+           Normalguy.otherx += Normalguy.otherspeed * Normalguy.directionX;
+           Normalguy.othery += Normalguy.otherspeed * Normalguy.directionY;
+         
+           // Normalguy 경계 체크 - 캔버스 밖으로 못 나가게 제한
+           if (Normalguy.otherx < 0) {
+             Normalguy.otherx = 0;
+             Normalguy.directionX = 1;
+           }
+           if (Normalguy.othery < 0) {
+             Normalguy.othery = 0;
+             Normalguy.directionY = 1;
+           }
+           if (Normalguy.otherx + Normalguy.othersize > canvas.width) {
+             Normalguy.otherx = canvas.width - Normalguy.othersize;
+             Normalguy.directionX = -1;
+           }
+           if (Normalguy.othery + Normalguy.othersize > canvas.height) {
+             Normalguy.othery = canvas.height - Normalguy.othersize;
+             Normalguy.directionY = -1;}
+         
+             // Normalboi 위치 업데이트 - 방향에 따라 위치 변경
+           Normalboi.otherX += Normalboi.otherSPEED * Normalboi.directionx;
+           Normalboi.otherY += Normalboi.otherSPEED * Normalboi.directiony;
+         
+           // Normalboi 경계 체크 - 캔버스 밖으로 못 나가게 제한
+           if (Normalboi.otherX < 0) {
+             Normalboi.otherX = 0;
+             Normalboi.directionx = 1;
+           }
+           if (Normalboi.otherY < 0) {
+             Normalboi.otherY = 0;
+             Normalboi.directiony = 1;
+           }
+           if (Normalboi.otherX + Normalboi.otherSIZE > canvas.width) {
+             Normalboi.otherX = canvas.width - Normalboi.otherSIZE;
+             Normalboi.directionx = -1;
+           }
+           if (Normalboi.otherY + Normalboi.otherSIZE > canvas.height) {
+             Normalboi.otherY = canvas.height - Normalboi.otherSIZE;
+             Normalboi.directiony = -1;}
+         
+           // Youtuber 위치 업데이트 - 방향에 따라 위치 변경
+           Youtuber.ThirdX += Youtuber.ThirdSpeed * Youtuber.diX;
+           Youtuber.ThirdY += Youtuber.ThirdSpeed * Youtuber.diY;
+         
+           // Youtuber 경계 체크 - 캔버스 밖으로 못 나가게 제한
+           if (Youtuber.ThirdX < 0) {
+             Youtuber.ThirdX = 0;
+             Youtuber.diX = 1;
+           }
+           if (Youtuber.ThirdY < 0) {
+             Youtuber.ThirdY = 0;
+             Youtuber.diY = 1;
+           }
+           if (Youtuber.ThirdX + Youtuber.ThirdSize > canvas.width) {
+             Youtuber.ThirdX = canvas.width - Youtuber.ThirdSize;
+             Youtuber.diX = -1;
+           }
+           if (Youtuber.ThirdY + Youtuber.ThirdSize > canvas.height) {
+             Youtuber.ThirdY = canvas.height - Youtuber.ThirdSize;
+             Youtuber.diY = -1;
+           }}
+         
+         // 화면 그리기 함수
+         function draw(){ 
+           // 캔버스 지우기
+           ctx.clearRect(0, 0, 2000, 1000);
+         
+           // 배경 그리기
+           ctx.fillStyle = "brown";
+           ctx.fillRect(50, 20, 150, 850);
+           ctx.fillStyle = "maroon";
+           ctx.fillRect(500, 300, 200, 170);
+           ctx.fillRect(1000, 300, 200, 170);
+           ctx.fillRect(1250, 300, 200, 170);
+           ctx.fillRect(750, 300, 200, 170);
+           ctx.fillRect(500, 490, 200, 170);
+           ctx.fillRect(1000, 490, 200, 170);
+           ctx.fillRect(1250, 490, 200, 170);
+           ctx.fillRect(750, 490, 200, 170);
+           ctx.fillRect(500, 680, 200, 170);
+           ctx.fillRect(1000, 680, 200, 170);
+           ctx.fillRect(1250, 680, 200, 170);
+           ctx.fillRect(750, 680, 200, 170);
+           
+            // End 그리기 (이미 로드된 이미지 사용)
+           if (erdragonImage.complete) {
+             ctx.drawImage(erdragonImage, 1500, 325, 125, 125)
+           }
+            // Spawnpoint 그리기 (이미 로드된 이미지 사용)
+           if (DontMakeThisACultImage.complete) {
+             ctx.drawImage(DontMakeThisACultImage, 62.5, 100, 125, 125)
+           }
+               // 플레이어 그리기 (이미 로드된 이미지 사용)
+           if (imgImage.complete) {
+             ctx.drawImage(imgImage, img.x, img.y, img.size, img.size);
+           }
+           // Normalguy 그리기 (이미 로드된 이미지 사용)
+           if (NormalguyImage.complete) {
+             ctx.drawImage(NormalguyImage, Normalguy.otherx, Normalguy.othery, Normalguy.othersize, Normalguy.othersize);
+           }
+           // Normalboi 그리기 (이미 로드된 이미지 사용)
+           if (NormalboiImage.complete){
+             ctx.drawImage(NormalboiImage, Normalboi.otherX, Normalboi.otherY, Normalboi.otherSIZE, 130);
+           }
+           // Youtuber 그리기 (이미 로드된 이미지 사용)
+           if (YoutuberImage.complete) {
+             ctx.drawImage(YoutuberImage, Youtuber.ThirdX, Youtuber.ThirdY, Youtuber.ThirdSize, 150)
+           }}
+         
+         // 게임 루프
+         function loop() {
+           update();
+           draw();
+           requestAnimationFrame(loop);
+         }
+         loop();
+      </script>
+   </body>
+</html>
+
