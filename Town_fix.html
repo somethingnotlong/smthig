@@ -99,6 +99,27 @@
            }
            return false;
          }
+
+                           //(x, y, width, height)
+         const damage= [
+           {x:Normalguy.otherx, y:Normalguy.othery, width:Normalguy.othersize, height:125},
+           {x:Normalboi.otherX, y:Normalboi.otherY, width:Normalboi.otherSIZE, height:130},
+           {x:Youtuber.ThirdX, y:Youtuber.ThirdY, width:Youtuber.ThirdSize, height:130},
+         ];
+
+                  // damage 감지 함수 충돌 여부만 반환
+         function checkEnemyCollision(otherx, othery, othersize, otherX, otherY, otherSIZE,ThirdX, ThirdY, ThirdSize) {
+                    for (let dmg of damage) {
+             // 체크
+             if (img.x < dmg.x + dmg.width && 
+                 img.x + size > dmg.x &&
+                 img.y < dmg.y + dmg.height &&
+                 img.y + size > dmg.y) {
+               return true;
+             }
+           }
+           return false;
+         }
          
          // 현재 눌려 있는 키 상태
          const keys = {
@@ -141,6 +162,11 @@
              img.y = prevY;
            }
            
+                    //damage requirements & actual damage
+              if (checkEnemyCollision(img.x, img.y, img.size)) {
+             lifeCount = lifeCount - 1
+           }
+
            // 캔버스 밖으로 못 나가게 제한
            if (img.x < 0) img.x = 0;
            if (img.y < 0) img.y = 0;
@@ -250,11 +276,9 @@
            if (Youtuber.ThirdY + Youtuber.ThirdSize > canvas.height) {
              Youtuber.ThirdY = canvas.height - Youtuber.ThirdSize;
              Youtuber.diY = -1;
-           }
+           }}
 
-         //damage requirements & actual damage
-         if (img.x == Normalguy.otherx) {
-         lifeCount = 2}}
+
          
          // 화면 그리기 함수
          function draw(){ 
