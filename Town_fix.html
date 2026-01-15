@@ -11,8 +11,10 @@
          }
       </style>
       <script>
-        var lifeCount = 3
-         console.log(lifeCount)
+         var lifeCount = 3;
+         var isInvincible = false;
+         var invincibleTimer = 0;
+          console.log(lifeCount)
          const canvas = document.getElementById("canvas");
          const ctx = canvas.getContext("2d");
          
@@ -100,24 +102,32 @@
            return false;
          }
 
-           //(x, y, width, height)
-         const damage= [
-           {x:Normalguy.otherx, y:Normalguy.othery, width:Normalguy.othersize, height:125},
-           {x:Normalboi.otherX, y:Normalboi.otherY, width:Normalboi.otherSIZE, height:130},
-           {x:Youtuber.ThirdX, y:Youtuber.ThirdY, width:Youtuber.ThirdSize, height:130},
-         ];
-
-                  // damage 감지 함수 충돌 여부만 반환
-         function checkEnemyCollision(otherx, othery, othersize, otherX, otherY, otherSIZE,ThirdX, ThirdY, ThirdSize) {
-                    for (let dmg of damage) {
-             // 체크
-             if (img.x < dmg.x + dmg.width && 
-                 img.x + img.size > dmg.x &&
-                 img.y < dmg.y + dmg.height &&
-                 img.y + img.size > dmg.y) {
-               return true;
-             }
+         // 적 충돌 감지 함수 (플레이어와 NPC들의 충돌 체크) - NPC 객체를 직접 참조
+         function checkEnemyCollision(px, py, psize) {
+           // Normalguy와 충돌 체크
+           if (px < Normalguy.otherx + Normalguy.othersize && 
+               px + psize > Normalguy.otherx &&
+               py < Normalguy.othery + 125 &&
+               py + psize > Normalguy.othery) {
+             return true;
            }
+           
+           // Normalboi와 충돌 체크
+           if (px < Normalboi.otherX + Normalboi.otherSIZE && 
+               px + psize > Normalboi.otherX &&
+               py < Normalboi.otherY + 130 &&
+               py + psize > Normalboi.otherY) {
+             return true;
+           }
+           
+           // Youtuber와 충돌 체크
+           if (px < Youtuber.ThirdX + Youtuber.ThirdSize && 
+               px + psize > Youtuber.ThirdX &&
+               py < Youtuber.ThirdY + 130 &&
+               py + psize > Youtuber.ThirdY) {
+             return true;
+           }
+           
            return false;
          }
          
@@ -162,9 +172,20 @@
              img.y = prevY;
            }
            
-                    //damage requirements & actual damage
-              if (checkEnemyCollision(img.x, img.y, img.size)) {
-              lifeCount = lifeCount - 1
+           // 무적 상태 타이머 업데이트
+           if (isInvincible) {
+             invincibleTimer--;
+             if (invincibleTimer <= 0) {
+               isInvincible = false;
+             }
+           }
+           
+           // 적과 충돌 체크 (damage 감지) - 무적 상태가 아닐 때만
+           if (!isInvincible && checkEnemyCollision(img.x, img.y, img.size)) {
+             lifeCount = lifeCount - 1;
+             isInvincible = true;
+             invincibleTimer = 60; // 약 1초간 무적 (60프레임)
+             console.log("Life lost! Remaining: " + lifeCount);
            }
 
            // 캔버스 밖으로 못 나가게 제한
