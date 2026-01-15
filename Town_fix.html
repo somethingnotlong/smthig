@@ -100,7 +100,7 @@
            return false;
          }
 
-                           //(x, y, width, height)
+           //(x, y, width, height)
          const damage= [
            {x:Normalguy.otherx, y:Normalguy.othery, width:Normalguy.othersize, height:125},
            {x:Normalboi.otherX, y:Normalboi.otherY, width:Normalboi.otherSIZE, height:130},
@@ -112,9 +112,9 @@
                     for (let dmg of damage) {
              // 체크
              if (img.x < dmg.x + dmg.width && 
-                 img.x + size > dmg.x &&
+                 img.x + img.size > dmg.x &&
                  img.y < dmg.y + dmg.height &&
-                 img.y + size > dmg.y) {
+                 img.y + img.size > dmg.y) {
                return true;
              }
            }
@@ -164,7 +164,7 @@
            
                     //damage requirements & actual damage
               if (checkEnemyCollision(img.x, img.y, img.size)) {
-             lifeCount = lifeCount - 1
+              lifeCount = lifeCount - 1
            }
 
            // 캔버스 밖으로 못 나가게 제한
@@ -320,11 +320,11 @@
          
          // 게임 루프
          function loop() {
-           update();
-           draw();
-           requestAnimationFrame(loop);
+        update();
+          draw();
+          requestAnimationFrame(loop);
          }
-         loop();
+        loop();
       </script>
    </body>
 </html>
