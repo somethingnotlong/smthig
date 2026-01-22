@@ -14,6 +14,8 @@
          var lifeCount = 3;
          var isInvincible = false;
          var invincibleTimer = 0;
+         var isattacking = false;
+         var attackTimer = 0;
           console.log(lifeCount)
          const canvas = document.getElementById("canvas");
          const ctx = canvas.getContext("2d");
@@ -108,28 +110,51 @@
            if (px < Normalguy.otherx + Normalguy.othersize && 
                px + psize > Normalguy.otherx &&
                py < Normalguy.othery + 125 &&
-               py + psize > Normalguy.othery) {
-             return true;
-           }
+               py + psize > Normalguy.othery &&
+              isattacking == false) {
+             return true; 
+           }if (px < Normalguy.otherx + Normalguy.othersize && 
+               px + psize > Normalguy.otherx &&
+               py < Normalguy.othery + 125 &&
+               py + psize > Normalguy.othery &&
+               isattacking == true){
+              Normalguy.directionX *= -1;
+             Normalguy.directionY *= -1;
+              return false }
            
            // Normalboi와 충돌 체크
            if (px < Normalboi.otherX + Normalboi.otherSIZE && 
                px + psize > Normalboi.otherX &&
                py < Normalboi.otherY + 130 &&
-               py + psize > Normalboi.otherY) {
-             return true;
-           }
+               py + psize > Normalboi.otherY &&
+              isattacking == false) {
+             return true
+              }if (px < Normalboi.otherX + Normalboi.otherSIZE && 
+               px + psize > Normalboi.otherX &&
+               py < Normalboi.otherY + 130 &&
+               py + psize > Normalboi.otherY &&
+               isattacking == true) {
+            Normalboi.directionx *= -1;
+             Normalboi.directiony *= -1;
+            return false}
            
            // Youtuber와 충돌 체크
            if (px < Youtuber.ThirdX + Youtuber.ThirdSize && 
                px + psize > Youtuber.ThirdX &&
                py < Youtuber.ThirdY + 130 &&
-               py + psize > Youtuber.ThirdY) {
+               py + psize > Youtuber.ThirdY &&
+              isattacking == false) {
              return true;
-           }
-           
-           return false;
-         }
+           }if (px < Youtuber.ThirdX + Youtuber.ThirdSize && 
+               px + psize > Youtuber.ThirdX &&
+               py < Youtuber.ThirdY + 130 &&
+               py + psize > Youtuber.ThirdY &&
+               isattacking == true){
+        Youtuber.diX *= -1;
+        Youtuber.diY*= -1; 
+        return false;
+      }}
+    
          
          // 현재 눌려 있는 키 상태
          const keys = {
@@ -137,6 +162,7 @@
            a: false,
            s: false,
            d: false,
+           q: false,
          };
          
          // 키 입력 이벤트 등록 (한 번만 등록)
@@ -165,6 +191,8 @@
            if (keys.s) img.y += img.speed; // 아래
            if (keys.a) img.x -= img.speed; // 왼쪽
            if (keys.d) img.x += img.speed; // 오른쪽
+           if (keys.q && isattacking == false) isattacking = true;// 공격
+           
          
            // 벽 충돌 체크 먼저
            if (checkWallCollision(img.x, img.y, img.size)) {
@@ -179,6 +207,14 @@
                isInvincible = false;
              }
            }
+          // 타이머 발동
+           if (isattacking){
+              attackTimer--;
+              attackTimer= 30; // 약 0.5초간 무적 (30프레임)
+             console.log("You pushed the enemy, they took a step back.");
+           } if (attackTimer <= 0) {
+               isattacking = false;}
+           
            
            // 적과 충돌 체크 (damage 감지) - 무적 상태가 아닐 때만
            if (!isInvincible && checkEnemyCollision(img.x, img.y, img.size)) {
@@ -198,8 +234,6 @@
              img.y = canvas.height - img.size;
            }
            
-           
-                      
            // Normalguy 위치 업데이트 - 방향에 따라 위치 변경
            let prevNormalguyX = Normalguy.otherx;
            let prevNormalguyY = Normalguy.othery;
@@ -299,8 +333,6 @@
              Youtuber.diY = -1;
            }}
 
-
-         
          // 화면 그리기 함수
          function draw(){ 
            // 캔버스 지우기
@@ -340,13 +372,11 @@
            }}
          
          // 게임 루프
-         function loop() {
+         function loop(){
         update();
           draw();
-          requestAnimationFrame(loop);
-         }
-        loop();
-      </script>
+          requestAnimationFrame(loop);}
+          loop();
+          </script>
    </body>
 </html>
-
