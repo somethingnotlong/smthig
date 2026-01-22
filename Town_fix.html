@@ -117,7 +117,7 @@
                px + psize > Normalguy.otherx &&
                py < Normalguy.othery + 125 &&
                py + psize > Normalguy.othery &&
-               isattacking == true){
+               isattacking){
               Normalguy.directionX *= -1;
              Normalguy.directionY *= -1;
               return false }
@@ -133,7 +133,7 @@
                px + psize > Normalboi.otherX &&
                py < Normalboi.otherY + 130 &&
                py + psize > Normalboi.otherY &&
-               isattacking == true) {
+               isattacking) {
             Normalboi.directionx *= -1;
              Normalboi.directiony *= -1;
             return false}
@@ -143,13 +143,13 @@
                px + psize > Youtuber.ThirdX &&
                py < Youtuber.ThirdY + 130 &&
                py + psize > Youtuber.ThirdY &&
-              isattacking == false) {
+              isattacking != true) {
              return true;
            }if (px < Youtuber.ThirdX + Youtuber.ThirdSize && 
                px + psize > Youtuber.ThirdX &&
                py < Youtuber.ThirdY + 130 &&
                py + psize > Youtuber.ThirdY &&
-               isattacking == true){
+               isattacking){
         Youtuber.diX *= -1;
         Youtuber.diY*= -1; 
         return false;
@@ -212,9 +212,9 @@
               attackTimer--;
               attackTimer= 30; // 약 0.5초간 무적 (30프레임)
              console.log("You pushed the enemy, they took a step back.");
-           } if (attackTimer <= 0) {
-               isattacking = false;}
-           
+            if (attackTimer <= 0){
+               isattacking = false;
+            }}
            
            // 적과 충돌 체크 (damage 감지) - 무적 상태가 아닐 때만
            if (!isInvincible && checkEnemyCollision(img.x, img.y, img.size)) {
