@@ -7,7 +7,7 @@
    <body>
       <canvas id="canvas" width="1700" height="925"></canvas>
       <style> canvas {
-         background: rgb(7, 137, 18)
+         background: rgb(17, 164, 30)
          }
       </style>
       <script>
@@ -16,6 +16,11 @@
          var invincibleTimer = 0;
          var isattacking = false;
          var attackTimer = 0;
+         var ScreenSize = 0;
+         var ScreenHeight = 0;
+         var HPdisapp3 = 100;
+         var HPdisapp2 = 100;
+         var HPdisapp1 = 100;
           console.log(lifeCount)
          const canvas = document.getElementById("canvas");
          const ctx = canvas.getContext("2d");
@@ -25,11 +30,11 @@
            x: 250,
            y: 100,
            size: 80,
-           speed: 12,
+           speed: 10,
          };
          
          const Normalguy = {
-           otherx: 300,
+           otherx: 1100,
            othery: 200,
            othersize: 80,
            otherspeed: 2,
@@ -38,8 +43,8 @@
          };
          
            const Normalboi = {
-           otherX: 120,
-           otherY: 450,
+           otherX: 900,
+           otherY: 200,
            otherSIZE: 80,
            otherSPEED: 2,
            directionx: Math.random() > 0.5 ? 1 : -1,
@@ -48,8 +53,9 @@
          
           const Youtuber = {
            ThirdX: 300,
-           ThirdY: 150,
+           ThirdY: 825,
            ThirdSize: 90,
+           Thirdheight: 150,
            ThirdSpeed: 2,
            diX: Math.random() > 0.5 ? 1.5 : -1,
            diY: Math.random() > 0.5 ? 1.5 : -1,
@@ -68,11 +74,23 @@
          const NormalguyImage = new Image();
          NormalguyImage.src = "character/5.png";
          
-                  const NormalboiImage = new Image();
+         const NormalboiImage = new Image();
          NormalboiImage.src = "character/5.png";
          
          const YoutuberImage = new Image();
          YoutuberImage.src = "character/7.png";
+
+         const HP1Image = new Image();
+         HP1Image.src = "character/Health.png";
+
+         const HP2Image = new Image();
+         HP2Image.src = "character/Health.png";
+
+         const HP3Image = new Image();
+         HP3Image.src = "character/Health.png";
+         
+         const GameOverImage = new Image();
+         GameOverImage.src = "character/Stay determined.png";
          
          // 벽 배열 정의 (x, y, width, height)
          const walls = [
@@ -120,7 +138,7 @@
                isattacking){
               Normalguy.directionX *= -1;
              Normalguy.directionY *= -1;
-              return false }
+              return false}
            
            // Normalboi와 충돌 체크
            if (px < Normalboi.otherX + Normalboi.otherSIZE && 
@@ -191,7 +209,8 @@
            if (keys.s) img.y += img.speed; // 아래
            if (keys.a) img.x -= img.speed; // 왼쪽
            if (keys.d) img.x += img.speed; // 오른쪽
-           if (keys.q && isattacking == false) isattacking = true;// 공격
+           if (keys.q && isattacking != true) {isattacking = true; 
+           attackTimer= 30;} // 공격
            
          
            // 벽 충돌 체크 먼저
@@ -205,24 +224,33 @@
              invincibleTimer--;
              if (invincibleTimer <= 0) {
                isInvincible = false;
-             }
-           }
-          // 타이머 발동
-           if (isattacking){
+             }}
+
+              //공격 타이머
+              if (isattacking) {
               attackTimer--;
-              attackTimer= 30; // 약 0.5초간 무적 (30프레임)
-             console.log("You pushed the enemy, they took a step back.");
-            if (attackTimer <= 0){
-               isattacking = false;
+            if (attackTimer <= 0) {
+              isattacking = false;
             }}
-           
+
            // 적과 충돌 체크 (damage 감지) - 무적 상태가 아닐 때만
            if (!isInvincible && checkEnemyCollision(img.x, img.y, img.size)) {
              lifeCount = lifeCount - 1;
+            if (lifeCount = 2)
+             HPdisapp3 = 0 
+             if (lifeCount == 1)
+             HPdisapp2 = 0
+             if (lifeCount == 0)
+             HPdisapp1 = 0
              isInvincible = true;
              invincibleTimer = 60; // 약 1초간 무적 (60프레임)
-             console.log("Life lost! Remaining: " + lifeCount);
+             console.log("You were damaged, Remaining runaway chances: " + lifeCount);
            }
+
+           //게임 오버 장면
+           if (lifeCount == 0)
+           ScreenSize = 1700
+          ScreenHeight = 975
 
            // 캔버스 밖으로 못 나가게 제한
            if (img.x < 0) img.x = 0;
@@ -308,7 +336,7 @@
            Youtuber.ThirdY += Youtuber.ThirdSpeed * Youtuber.diY;
          
            // Youtuber 벽 충돌 체크
-           if (checkWallCollision(Youtuber.ThirdX, Youtuber.ThirdY, Youtuber.ThirdSize)) {
+           if (checkWallCollision(Youtuber.ThirdX, Youtuber.ThirdY, Youtuber.ThirdSize, Youtuber.Thirdheight)) {
              Youtuber.ThirdX = prevYoutuberX;
              Youtuber.ThirdY = prevYoutuberY;
              Youtuber.diX *= -1;
@@ -325,7 +353,7 @@
              Youtuber.diY = 1;
            }
            if (Youtuber.ThirdX + Youtuber.ThirdSize > canvas.width) {
-             Youtuber.ThirdX = canvas.width - Youtuber.ThirdSize;
+             Youtuber.ThirdX = canvas.width - Youtuber.ThirdSize || Youtuber.Thirdheight;
              Youtuber.diX = -1;
            }
            if (Youtuber.ThirdY + Youtuber.ThirdSize > canvas.height) {
@@ -368,7 +396,23 @@
            }
            // Youtuber 그리기 (이미 로드된 이미지 사용)
            if (YoutuberImage.complete) {
-             ctx.drawImage(YoutuberImage, Youtuber.ThirdX, Youtuber.ThirdY, Youtuber.ThirdSize, 150)
+             ctx.drawImage(YoutuberImage, Youtuber.ThirdX, Youtuber.ThirdY, Youtuber.ThirdSize, Youtuber.Thirdheight)
+           }
+           // HP 그리기 (이미 로드된 이미지 사용)
+           if (HP1Image.complete) {
+             ctx.drawImage(HP1Image, 1250, 20, HPdisapp1, HPdisapp1)
+           }
+          
+          if (HP2Image.complete) {
+          ctx.drawImage(HP2Image, 1400, 20, HPdisapp2, HPdisapp2)
+           }
+          
+          if (HP3Image.complete) {
+          ctx.drawImage(HP3Image, 1550, 20, HPdisapp3, HPdisapp3)
+          }
+          // Gameover 그리기 (이미 로드된 이미지 사용)
+           if (GameOverImage.complete) {
+             ctx.drawImage(GameOverImage, 0, 0,ScreenSize,ScreenHeight)
            }}
          
          // 게임 루프
